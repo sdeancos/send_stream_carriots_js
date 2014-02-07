@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+    <title>Example Send Stream Carriots with Javascript</title>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+</head>
+
+<body>
+    <div id='response'>
+        Waiting ...
+    </div>
+
+</body>
+
+<script type="text/javascript">
+
+    var stream = {
+        'protocol': 'v2',
+        'at': 'now',
+        'device': 'Id_developer_device_HERE',
+        'data': {'example': 0},
+        'checksum' : ''
+    }
+
+    function callbackAjax(text, status) {
+        document.getElementById("response").innerHTML = text;
+    }
+
+    function callAjax(url, stream, callback) {
+        var xmlhttp;
+        xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function(){
+            callback(xmlhttp.responseText, xmlhttp.status);
+        }
+        xmlhttp.open("POST", url, true);
+        xmlhttp.setRequestHeader('carriots.apikey', 'Your_apikey_HERE');
+        xmlhttp.send(JSON.stringify(stream));
+    }
+
+    callAjax('https://api.carriots.com/streams', stream, callbackAjax);
+
+</script>
+
+</html>
